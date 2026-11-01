@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictive Maintenance | Monitor</title>
+    <link rel="stylesheet" href="/ui/style.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">PM</div>
+            <div>
+                <h2>Prognix</h2>
+                <small>Predictive Maintenance</small>
+            </div>
+        </div>
+
+        <p class="nav-label">WORKSPACE</p>
+        <a class="nav-item active" href="#overview">▦ &nbsp; Dashboard</a>
+        <a class="nav-item" href="#manual">⚙ &nbsp; Manual Prediction</a>
+        <a class="nav-item" href="#simulator">◉ &nbsp; Simulator</a>
+        <a class="nav-item" href="#history">▤ &nbsp; History</a>
+
+        <div class="sidebar-note">
+            <span class="dot green"></span> API connection
+            <p>Local development mode</p>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div>
+                <p class="eyebrow">MACHINE INTELLIGENCE / OVERVIEW</p>
+                <h1>Predictive Maintenance</h1>
+                <p class="subtitle">
+                    Monitor machine health and estimate failure risk.
+                </p>
+            </div>
+            <div class="demo-label">
+                <span class="dot amber"></span> SIMULATED ENVIRONMENT
+            </div>
+        </header>
+
+        <section id="overview" class="metrics">
+            <article class="metric-card">
+                <span class="metric-label">Latest failure probability</span>
+                <h2 id="latestProbability">—</h2>
+                <p>From the latest manual prediction</p>
+            </article>
+            <article class="metric-card">
+                <span class="metric-label">Latest prediction</span>
+                <h2 id="latestStatus">No data</h2>
+                <p>Model classification</p>
+            </article>
+            <article class="metric-card">
+                <span class="metric-label">Saved manual records</span>
+                <h2 id="recordCount">0</h2>
+                <p>Stored in SQLite</p>
+            </article>
+        </section>
+
+        <section id="simulator" class="panel">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">VIRTUAL SENSOR FEED</p>
+                    <h2>Simulator Controls</h2>
+                    <p class="subtitle">
+                        Generate sample machine readings every five seconds.
+                    </p>
+                </div>
+                <span id="simStatus" class="status-pill neutral">
+                    Checking status...
+                </span>
+            </div>
+
+            <div class="simulator-controls">
+                <button id="startBtn" class="button primary">
+                    ▶ Start Simulator
+                </button>
+                <button id="stopBtn" class="button danger" disabled>
+                    ■ Stop Simulator
+                </button>
+                <span id="simMessage" class="helper-text">
+                    No real machine sensors are connected.
+                </span>
+            </div>
+        </section>
+
+        <section id="manual" class="panel">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">MODEL INFERENCE</p>
+                    <h2>Manual Machine Assessment</h2>
+                    <p class="subtitle">
+                        Enter sensor values to estimate failure risk.
+                    </p>
+                </div>
+                <span class="small-tag">XGBoost Model</span>
+            </div>
+
+            <form id="predictionForm">
+                <div class="form-grid">
+                    <label>
+                        Machine type
+                        <select id="machine_type" required>
+                            <option value="L">L — Low</option>
+                            <option value="M" selected>M — Medium</option>
+                            <option value="H">H — High</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        Air temperature (K)
+                        <input id="air_temperature" type="number"
+                               min="0" step="any" value="298.1" required>
+                    </label>
+
+                    <label>
+                        Process temperature (K)
+                        <input id="process_temperature" type="number"
+                               min="0" step="any" value="308.6" required>
+                    </label>
+
+                    <label>
+                        Rotational speed (rpm)
+                        <input id="rotational_speed" type="number"
+                               min="0.01" step="any" value="1500" required>
+                    </label>
+
+                    <label>
+                        Torque (Nm)
+                        <input id="torque" type="number"
+                               min="0.01" step="any" value="45" required>
+                    </label>
+
+                    <label>
+                        Tool wear (min)
+                        <input id="tool_wear" type="number"
+                               min="0" step="any" value="100" required>
+                    </label>
+                </div>
+
+                <div class="form-footer">
+                    <p class="helper-text">
+                        Predictions are estimates, not guarantees of machine safety.
+                    </p>
+                    <button class="button primary" type="submit" id="predictBtn">
+                        Analyze Machine →
+                    </button>
+                </div>
+            </form>
+
+            <div id="resultCard" class="result-card hidden" aria-live="polite">
+                <div>
+                    <p class="eyebrow">PREDICTION RESULT</p>
+                    <h2 id="resultStatus">—</h2>
+                    <p id="resultDescription">—</p>
+                </div>
+                <div class="probability-block">
+                    <span>Failure probability</span>
+                    <strong id="resultProbability">—</strong>
+                    <div class="progress-track">
+                        <div id="probabilityBar" class="progress-bar"></div>
+                    </div>
+                    <small id="thresholdText">Decision threshold: 42%</small>
+                </div>
+            </div>
+            <p id="formMessage" class="message" aria-live="polite"></p>
+        </section>
+
+        <section id="history" class="panel">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">SQLITE STORAGE</p>
+                    <h2>Manual Prediction History</h2>
+                    <p class="subtitle">
+                        Recent predictions submitted through this form.
+                    </p>
+                </div>
+                <button id="refreshBtn" class="button secondary">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID / Time</th>
+                            <th>Type</th>
+                            <th>Temperature (K)</th>
+                            <th>Speed (rpm)</th>
+                            <th>Torque (Nm)</th>
+                            <th>Tool wear</th>
+                            <th>Failure risk</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyBody">
+                        <tr>
+                            <td colspan="8" class="empty-state">
+                                Loading prediction history...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p id="historyMessage" class="message"></p>
+        </section>
+
+        <footer>
+            MaintenIQ · Academic project · XGBoost + FastAPI + SQLite
+            <span>Simulated readings · No physical sensor connection</span>
+        </footer>
+    </main>
+
+    <script src="/ui/app.js"></script>
+</body>
+</html>
