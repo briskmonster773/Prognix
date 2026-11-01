@@ -1,20 +1,23 @@
 
-# MaintenIQ – AI-Powered Predictive Maintenance System
+# Prognix
+### AI-Powered Predictive Maintenance System
 
-MaintenIQ is a machine learning-based predictive maintenance web application that predicts potential machine failures using operational sensor data.
+Prognix is a machine learning-based predictive maintenance web application that predicts potential machine failures using operational sensor data.
 
-The system uses a trained XGBoost classification model to estimate failure probability and classify machine conditions as Normal or Failure Risk. It provides a web dashboard for manual machine assessment, simulated sensor monitoring, and prediction history management using SQLite.
+The system uses a trained XGBoost classification model to estimate failure probability and classify machine conditions as **Normal** or **Failure Risk**. It provides an interactive dashboard for manual machine assessment, simulated sensor monitoring, and prediction history management using SQLite.
 
 ## Features
 
-- **Machine Failure Prediction:** Predicts potential machine failures using a trained XGBoost model.
-- **Failure Probability Estimation:** Displays the estimated probability of machine failure.
-- **Manual Machine Assessment:** Allows users to enter machine parameters and generate predictions.
-- **Sensor Data Simulation:** Generates simulated machine readings for continuous monitoring.
-- **Interactive Dashboard:** Displays prediction results, machine status, and simulator controls.
-- **Prediction History:** Stores manual predictions in an SQLite database.
-- **REST API:** Provides API endpoints using FastAPI.
-- **Data Logging:** Stores simulated predictions in CSV format.
+- Machine failure prediction using a trained XGBoost model
+- Failure probability estimation
+- Manual machine assessment through an interactive dashboard
+- Simulated machine sensor data generation
+- Real-time simulator start and stop controls
+- Machine condition classification: Normal or Failure Risk
+- Prediction history stored in SQLite
+- CSV logging of simulated predictions
+- REST API built with FastAPI
+- Interactive and responsive web dashboard
 
 ## Tech Stack
 
@@ -32,32 +35,32 @@ The system uses a trained XGBoost classification model to estimate failure proba
 ## System Architecture
 
 ```text
-             Machine Sensor Data
-                      |
-          +-----------+-----------+
-          |                       |
-    Manual Input            Data Simulator
-          |                       |
-          +-----------+-----------+
-                      |
+              Machine Sensor Data
+                       |
+           +-----------+-----------+
+           |                       |
+      Manual Input          Data Simulator
+           |                       |
+           +-----------+-----------+
+                       |
                 FastAPI Backend
-                      |
-            Data Preprocessing
-                      |
-          Trained XGBoost Model
-                      |
-          Failure Probability
-                      |
-          +-----------+-----------+
-          |                       |
-     Prediction Result      Data Storage
-          |                       |
-    Web Dashboard          SQLite / CSV
+                       |
+              Data Preprocessing
+                       |
+             Trained XGBoost Model
+                       |
+              Failure Probability
+                       |
+           +-----------+-----------+
+           |                       |
+     Prediction Result       Data Storage
+           |                       |
+     Web Dashboard           SQLite / CSV
 ```
 
 ## Machine Parameters
 
-The model uses the following six input features:
+The model uses six input features:
 
 | Parameter | Description |
 |---|---|
@@ -72,19 +75,17 @@ The model uses the following six input features:
 
 The system provides:
 
-- Failure Probability: Estimated probability of machine failure.
-- Decision Threshold: Configured threshold used for classification.
-- Prediction: Binary classification (0 or 1).
-- Machine Status:
-  - Normal
-  - Failure Risk
+- **Failure Probability:** Estimated probability of machine failure
+- **Decision Threshold:** Configured threshold used for classification
+- **Prediction:** Binary classification (0 or 1)
+- **Machine Status:** Normal or Failure Risk
 
-**Note:** Predictions are machine-learning estimates based on the training dataset. They do not guarantee actual machine safety or failure.
+> Note: Predictions are machine-learning estimates based on the training dataset. They do not guarantee actual machine safety or failure.
 
 ## Project Structure
 
 ```text
-Prective Maintaince/
+Prognix/
 │
 ├── backend/
 │   ├── main.py
@@ -102,11 +103,8 @@ Prective Maintaince/
 │   └── simulator.py
 │
 ├── data/
-│   └── simulator_predictions.csv
 │
 ├── Dataset/
-│
-├── maintenance.db
 │
 ├── .gitignore
 └── README.md
@@ -117,7 +115,7 @@ Prective Maintaince/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/MaintenIQ.git
+git clone https://github.com/briskmonster773/Prognix.git
 ```
 
 Navigate to the project directory:
@@ -132,7 +130,7 @@ cd Prognix
 python -m venv .venv
 ```
 
-Activate the environment.
+Activate the virtual environment.
 
 **Windows PowerShell:**
 
@@ -158,7 +156,7 @@ source .venv/bin/activate
 pip install -r backend/requirements.txt
 ```
 
-### 4. Run the FastAPI Backend
+### 4. Run the Application
 
 From the project root:
 
@@ -166,19 +164,13 @@ From the project root:
 python -m uvicorn backend.main:app --reload
 ```
 
-### 5. Open the Application
+### 5. Access the Application
 
-Dashboard:
-
-http://127.0.0.1:8000/ui/
-
-API documentation (Swagger):
-
-http://127.0.0.1:8000/docs
-
-Health check:
-
-http://127.0.0.1:8000/health
+| Service | URL |
+|---|---|
+| Web Dashboard | http://127.0.0.1:8000/ui/ |
+| API Documentation | http://127.0.0.1:8000/docs |
+| Health Check | http://127.0.0.1:8000/health |
 
 ## API Endpoints
 
@@ -206,7 +198,7 @@ https://archive.ics.uci.edu/dataset/601/ai4i+2020+predictive+maintenance+dataset
 - Real-time IoT sensor integration
 - Live machine health monitoring
 - Advanced analytics and visualization
-- Maintenance scheduling and alerts
+- Automated maintenance scheduling and alerts
 - Model performance monitoring
 - Cloud deployment
 - Role-based authentication
@@ -217,10 +209,9 @@ https://archive.ics.uci.edu/dataset/601/ai4i+2020+predictive+maintenance+dataset
 
 B.Tech – Artificial Intelligence & Analytics
 
-GitHub: https://github.com/YOUR_USERNAME
-
-LinkedIn: https://www.linkedin.com/in/animish-kulkarni-7b532a28a/
+- GitHub: https://github.com/briskmonster773
+- LinkedIn: https://www.linkedin.com/in/animish-kulkarni-7b532a28a/
 
 ---
 
-Prognix – Predict Failures. Prevent Downtime. Optimize Performance.*
+**Prognix — Predict Failures. Prevent Downtime. Optimize Performance.**
